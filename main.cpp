@@ -5,7 +5,7 @@
 //4. Написати програму, яка читає всі передані їй в командному рядку файли
 // та виводить їх, один за одним, у стандартний вивід (засобами системних викликів POSIX).
 
-#define BUF_SIZE 10000
+#define Buf 10000
 
 
 using namespace std;
@@ -13,7 +13,8 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
     int input_file;
-    char buffer[BUF_SIZE];
+    ssize_t rnb_in;
+    char buffer[Buf];
 
 
     for (int i = 1; i < argc; i++) {
@@ -24,7 +25,8 @@ int main(int argc, char *argv[]) {
         }
 
         cout <<"Name of file: "<< argv[i] << endl;
-        while (read(input_file, &buffer, BUF_SIZE) > 0) {
+        while ((rnb_in = read(input_file, &buffer, Buf)) > 0) {
+            buffer[rnb_in] = '\0';
             cout << buffer << endl;
         }
         cout << "!========================================================!" << endl;
